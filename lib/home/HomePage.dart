@@ -13,10 +13,11 @@ class HomePage extends StatelessWidget {
     ]);
 
     return new Scaffold(
+      backgroundColor: Colors.grey[900],
         body: new Column(
-      children: <Widget>[
-        new GradientAppBar("Cerca Nomi"),
-        HomePageBody(),
+          children: <Widget>[
+            //GradientAppBar("Cerca Nomi"),
+            HomePageBody(),
       ],
     ));
   }
