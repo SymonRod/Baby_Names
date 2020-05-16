@@ -1,6 +1,41 @@
 import 'package:flutter/material.dart';
+import 'package:cercanomi/cercanomi/cercanomi.dart' as cercanomi;
 
-class HomePageBody extends StatelessWidget {
+class HomePageBody extends StatefulWidget {
+  
+  @override
+  _HomePageBodyState createState() => _HomePageBodyState();
+
+}
+
+
+class _HomePageBodyState extends State<HomePageBody> {
+  
+
+
+  _HomePageBodyState();
+  
+
+  final myController = TextEditingController();
+
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is disposed.
+    myController.dispose();
+    super.dispose();
+  }
+  
+  
+  void _test(String text)  async {
+    var nomi = await cercanomi.fetchNomi(text);
+
+    for(int i=0; i<nomi.length;i++) {
+      print(nomi[i].nome);
+      print(nomi[i].lingua);
+    }
+    
+  }
+
   @override
   Widget build(BuildContext context) {
     return (Expanded(
@@ -13,7 +48,11 @@ class HomePageBody extends StatelessWidget {
             padding: EdgeInsets.symmetric(
               horizontal: 40,
             ),
-            child: TextFormField( 
+            child: TextField( 
+              controller: myController,
+              onChanged: (String value) {
+                _test(value);
+              },
               style: TextStyle(
                 color: Colors.white,
               ),
@@ -32,18 +71,6 @@ class HomePageBody extends StatelessWidget {
               ),
             ),
           ),
-
-          Container(
-            margin: EdgeInsets.only(
-              top: 20,
-            ),
-            padding: EdgeInsets.symmetric(
-              horizontal: 40,
-            ),
-
-            child: DropdownButton(
-            ),
-          )
         ],
     )));
   }
