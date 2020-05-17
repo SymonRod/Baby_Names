@@ -1,77 +1,53 @@
 import 'package:flutter/material.dart';
-import 'package:cercanomi/cercanomi/cercanomi.dart' as cercanomi;
+import 'package:cercanomi/cercanomi/CarteNomi.dart';
 
-class HomePageBody extends StatefulWidget {
-  
-  @override
-  _HomePageBodyState createState() => _HomePageBodyState();
-
-}
-
-
-class _HomePageBodyState extends State<HomePageBody> {
-  
-
-
-  _HomePageBodyState();
-  
-
-  final myController = TextEditingController();
-
-  @override
-  void dispose() {
-    // Clean up the controller when the widget is disposed.
-    myController.dispose();
-    super.dispose();
-  }
-  
-  
-  void _test(String text)  async {
-    var nomi = await cercanomi.fetchNomi(text);
-
-    for(int i=0; i<nomi.length;i++) {
-      print(nomi[i].nome);
-      print(nomi[i].lingua);
-    }
-    
-  }
+class HomePageBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController textEditingController = TextEditingController();
+
+    GlobalKey<CarteNomiState> _carteNomikey = GlobalKey<CarteNomiState>();
+    
+    textEditingController.text = 'Ciao Mondo';
+
     return (Expanded(
-        child: ListView(
+      child: Column(
         children: <Widget>[
           Container(
-            margin: EdgeInsets.symmetric(
-              vertical: 40,
+            margin: EdgeInsets.only(
+              top: 70,
+              bottom: 5,
             ),
             padding: EdgeInsets.symmetric(
               horizontal: 40,
             ),
-            child: TextField( 
-              controller: myController,
-              onChanged: (String value) {
-                _test(value);
-              },
+            child: TextField(
+              
+              controller: textEditingController,
+              onEditingComplete: () => _carteNomikey.,
               style: TextStyle(
                 color: Colors.white,
               ),
               decoration: InputDecoration(
                 border: new OutlineInputBorder(
                   borderRadius: new BorderRadius.circular(25.0),
-                  borderSide: new BorderSide(
-                  ),
+                  borderSide: new BorderSide(),
                 ),
                 hintText: "Cerca un nome!",
                 hintStyle: TextStyle(
                   color: Colors.white,
                   fontFamily: 'Montserrat',
-                  
                 ),
               ),
             ),
           ),
+          CarteNomi(
+            key: _carteNomikey,
+            textController: textEditingController,
+          ),
         ],
     )));
   }
+
 }
