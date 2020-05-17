@@ -1,77 +1,80 @@
 import 'package:flutter/material.dart';
-import 'package:cercanomi/cercanomi/cercanomi.dart' as cercanomi;
+import 'package:cercanomi/cercanomi/cercanomi.dart';
 
 class HomePageBody extends StatefulWidget {
   
+  final  TextEditingController textEditingController = TextEditingController();
+  
   @override
   _HomePageBodyState createState() => _HomePageBodyState();
-
 }
 
-
 class _HomePageBodyState extends State<HomePageBody> {
-  
 
-
-  _HomePageBodyState();
-  
-
-  final myController = TextEditingController();
-
-  @override
-  void dispose() {
-    // Clean up the controller when the widget is disposed.
-    myController.dispose();
-    super.dispose();
-  }
-  
-  
-  void _test(String text)  async {
-    var nomi = await cercanomi.fetchNomi(text);
-
-    for(int i=0; i<nomi.length;i++) {
-      print(nomi[i].nome);
-      print(nomi[i].lingua);
-    }
-    
+  void aggiorna() {
+    setState(() {
+      
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return (Expanded(
-        child: ListView(
+      child: Column(
         children: <Widget>[
+
           Container(
-            margin: EdgeInsets.symmetric(
-              vertical: 40,
+            margin: EdgeInsets.only(
+              top: 70,
+              bottom: 5,
             ),
             padding: EdgeInsets.symmetric(
               horizontal: 40,
             ),
-            child: TextField( 
-              controller: myController,
-              onChanged: (String value) {
-                _test(value);
-              },
+            child: TextField(
+              onEditingComplete: aggiorna,
+              controller: widget.textEditingController,
               style: TextStyle(
                 color: Colors.white,
               ),
               decoration: InputDecoration(
                 border: new OutlineInputBorder(
                   borderRadius: new BorderRadius.circular(25.0),
-                  borderSide: new BorderSide(
-                  ),
+                  borderSide: new BorderSide(),
                 ),
                 hintText: "Cerca un nome!",
                 hintStyle: TextStyle(
                   color: Colors.white,
                   fontFamily: 'Montserrat',
-                  
                 ),
               ),
             ),
           ),
+        Expanded(
+        child: FutureBuilder(
+          future: carteNomi(widget.textEditingController.text),
+          builder: (context,snapshot) {
+            if(!snapshot.hasData) {
+              return Center(child: CircularProgressIndicator());
+            } else {
+            return Container(
+              height: MediaQuery.of(context).size.height,
+              child: ListView.builder(
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
+                itemCount: snapshot.data.length,
+                itemBuilder: (context, index) {
+                  Container project = snapshot.data[index];
+                  return project;
+                },
+              ),
+            );
+            }
+          },
+        ),
+      )
         ],
     )));
   }
+
 }
