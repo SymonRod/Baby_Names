@@ -66,5 +66,9 @@ flutter:
           weight: 700
         - asset: fonts/Montserrat/Montserrat-Black.ttf
           weight: 900
+    - family: Abel
+      fonts:
+        - asset: fonts/abel/Abel-Regular.ttf
+          weight: 400
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

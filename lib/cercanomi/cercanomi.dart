@@ -29,27 +29,55 @@ Future<List<dynamic>> carteNomi(String nome) async {
     for(int i=0;i<listaNomi.length;i++) {
       nomi.add(
         Container(
-          height: 40,
           margin: EdgeInsets.symmetric(
-            horizontal: 30,
+            horizontal: 30
           ),
+          height: 45,
           child: Card(
             color: Colors.white,
-            child: Container(
-              child: Text(
-                listaNomi[i].nome,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontFamily: 'Montserrat',
-                  fontWeight: FontWeight.w700,
+            child: Row(
+              children: <Widget>[
+                
+                //Nome
+                Expanded(
+                  child: Container(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 10,
+                    ),
+
+                    child: Text(
+                      listaNomi[i].nome,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontFamily: 'Montserrat',
+                        fontWeight: FontWeight.w700,
+                      ),
+                      textAlign: TextAlign.left,
+                    ),
+                    alignment: Alignment.centerLeft,
                   ),
-                textAlign: TextAlign.left,
                 ),
-              alignment: Alignment.centerLeft,
-              padding: EdgeInsets.symmetric(
-                horizontal: 20
-              ),
-            )
+
+                //Lingua del nome IT o EN es
+                Expanded(
+                  child: Container(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 10,
+                    ),
+                    
+                    child: Text(
+                      listaNomi[i].lingua,
+                      style: TextStyle(
+                        color: Colors.grey[600],
+                        fontFamily: 'Montserrat',
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    alignment: Alignment.centerRight,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       );

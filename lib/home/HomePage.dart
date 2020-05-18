@@ -1,8 +1,8 @@
+import 'package:cercanomi/home/GradientAppBar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
-import 'GradientAppBar.dart';
-import 'HomePageBody.dart';
+import 'package:cercanomi/home/HomePageBody.dart';
+import 'package:cercanomi/home/SideNavBar.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -14,9 +14,12 @@ class HomePage extends StatelessWidget {
 
     return new Scaffold(
       backgroundColor: Colors.grey[900],
+        drawer: SideNavBar(),
         body: new Column(
           children: <Widget>[
-            //GradientAppBar("Cerca Nomi"),
+            GradientAppBar(
+              title: 'CercaNomi',
+            ),
             HomePageBody(),
       ],
     ));
