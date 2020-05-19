@@ -2,6 +2,8 @@ import 'package:cercanomi/models/Nome.dart';
 import 'package:flutter/material.dart';
 import 'package:cercanomi/cercanomi/cercanomi.dart';
 
+import '../cercanomi/cercanomi.dart';
+
 class HomePageBody extends StatefulWidget {
   final TextEditingController textEditingController = TextEditingController();
 
@@ -12,11 +14,18 @@ class HomePageBody extends StatefulWidget {
 class _HomePageBodyState extends State<HomePageBody> {
   double horizontalMargin = 40;
   Color coloreInput = Colors.blueAccent;
+  List<dynamic> listaNomi ;
 
+  void aggiorna() async {
+    listaNomi = await carteNomi(widget.textEditingController.text);
 
-  void aggiorna() {
-
-    setState(() {});
+    setState(() {
+      if(listaNomi.length == 0){
+        coloreInput = Colors.red;
+      } else {
+        coloreInput = Colors.green;
+      }
+    });
   }
 
   @override
@@ -63,37 +72,56 @@ class _HomePageBodyState extends State<HomePageBody> {
 
           // Carte dei Nomi
           Expanded(
-            child: FutureBuilder(
-              future: carteNomi(widget.textEditingController.text),
-              builder: (context, snapshot) {
-                if (!snapshot.hasData) {
-                  return Center(child: CircularProgressIndicator());
-                } else {
-                  
-                  var ciao = List.castFrom(snapshot.data);
-
-                  if(ciao.length == 0) {
-                    coloreInput = Colors.red;
-                  } else {
-                    coloreInput = Colors.green;
-                  }
-                  
-                  return Container(
-                    height: MediaQuery.of(context).size.height,
-                    child: ListView.builder(
-                      padding: EdgeInsets.zero,
-                      scrollDirection: Axis.vertical,
-                      shrinkWrap: true,
-                      itemCount: snapshot.data.length,
-                      itemBuilder: (context, index) {
-                        Container project = snapshot.data[index];
-                        return project;
-                      },
-                    ),
-                  );
-                }
-              },
+            child: listaNomi == null? Container(): Container(
+              height: MediaQuery.of(context).size.height,
+              child: ListView.builder(
+                padding: EdgeInsets.zero,
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
+                itemCount: listaNomi.length,
+                itemBuilder: (context, index) {
+                  Container project = listaNomi[index];
+                  return project;
+                },
+              ),
             ),
+
+            // child: FutureBuilder(
+            //   future: carteNomi(widget.textEditingController.text),
+            //   builder: (context, snapshot) {
+            //     if (!snapshot.hasData) {
+            //       return Center(child: CircularProgressIndicator());
+            //     } else {
+                  
+            //       var listaNomi = List.castFrom(snapshot.data);
+
+            //       if(listaNomi.length == 0) {
+            //         setState(() {
+            //           coloreInput = Colors.red;
+            //         });
+            //       } else {
+            //         setState(() {
+            //           coloreInput = Colors.green;
+            //         });
+            //       }
+        
+                  
+            //       return Container(
+            //         height: MediaQuery.of(context).size.height,
+            //         child: ListView.builder(
+            //           padding: EdgeInsets.zero,
+            //           scrollDirection: Axis.vertical,
+            //           shrinkWrap: true,
+            //           itemCount: snapshot.data.length,
+            //           itemBuilder: (context, index) {
+            //             Container project = snapshot.data[index];
+            //             return project;
+            //           },
+            //         ),
+            //       );
+            //     }
+            //   },
+            // ),
           ),
           
         ],
