@@ -1,5 +1,7 @@
+import 'package:flutter/material.dart';
+
 class Nome{
-  String nome;
+  String nome; 
   String lingua;
   
   Nome({this.nome,this.lingua});

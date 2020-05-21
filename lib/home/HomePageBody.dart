@@ -1,6 +1,7 @@
-import 'package:cercanomi/models/Nome.dart';
+import 'package:cercanomi/models/Nomi.dart';
 import 'package:flutter/material.dart';
 import 'package:cercanomi/cercanomi/cercanomi.dart';
+import 'package:provider/provider.dart';
 
 import '../cercanomi/cercanomi.dart';
 
@@ -41,89 +42,52 @@ class _HomePageBodyState extends State<HomePageBody> {
             padding: EdgeInsets.symmetric(
               horizontal: horizontalMargin,
             ),
-            child: TextField(
-              onEditingComplete: aggiorna,
-              controller: widget.textEditingController,
-              style: TextStyle(
-                color: Colors.white,
-              ),
-              decoration: InputDecoration(
-                focusedBorder: new OutlineInputBorder(
-                  borderRadius: new BorderRadius.circular(25),
-                  borderSide: new BorderSide(
-                    color: coloreInput,
-                  )
-                ),
+            child: Consumer<Nomi>(
+              builder: (context, nomi, child) =>
+                TextField(
+                  onEditingComplete: () {
+                    nomi.aggiornaNomi(widget.textEditingController.text);
+                  },
+                  controller: widget.textEditingController,
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                  decoration: InputDecoration(
+                    focusedBorder: new OutlineInputBorder(
+                      borderRadius: new BorderRadius.circular(25),
+                      borderSide: new BorderSide(
+                        color: nomi.lenght == 0? nomi.prima? Colors.white: Colors.red:Colors.green,
+                      )
+                    ),
 
-                border: new OutlineInputBorder(
-                  borderRadius: new BorderRadius.circular(25),
-                  borderSide: new BorderSide(
-                    color: coloreInput,
+                    border: new OutlineInputBorder(
+                      borderRadius: new BorderRadius.circular(25),
+                      borderSide: new BorderSide(
+                        color: nomi.lenght == 0? nomi.prima? Colors.white: Colors.red:Colors.green,
+                      ),
+                    ),
+                    hintText: "Cerca un nome!",
+                    hintStyle: TextStyle(
+                      color: Colors.white,
+                      fontFamily: 'Montserrat',
+                    ),
                   ),
                 ),
-                hintText: "Cerca un nome!",
-                hintStyle: TextStyle(
-                  color: Colors.white,
-                  fontFamily: 'Montserrat',
-                ),
-              ),
             ),
           ),
 
           // Carte dei Nomi
           Expanded(
-            child: listaNomi == null? Container(): Container(
-              height: MediaQuery.of(context).size.height,
-              child: ListView.builder(
-                padding: EdgeInsets.zero,
-                scrollDirection: Axis.vertical,
-                shrinkWrap: true,
-                itemCount: listaNomi.length,
-                itemBuilder: (context, index) {
-                  Container project = listaNomi[index];
-                  return project;
-                },
-              ),
-            ),
-
-            // child: FutureBuilder(
-            //   future: carteNomi(widget.textEditingController.text),
-            //   builder: (context, snapshot) {
-            //     if (!snapshot.hasData) {
-            //       return Center(child: CircularProgressIndicator());
-            //     } else {
+            child: Consumer<Nomi>(
+              builder: (context, nomi, child) => 
+                Container(
                   
-            //       var listaNomi = List.castFrom(snapshot.data);
-
-            //       if(listaNomi.length == 0) {
-            //         setState(() {
-            //           coloreInput = Colors.red;
-            //         });
-            //       } else {
-            //         setState(() {
-            //           coloreInput = Colors.green;
-            //         });
-            //       }
-        
-                  
-            //       return Container(
-            //         height: MediaQuery.of(context).size.height,
-            //         child: ListView.builder(
-            //           padding: EdgeInsets.zero,
-            //           scrollDirection: Axis.vertical,
-            //           shrinkWrap: true,
-            //           itemCount: snapshot.data.length,
-            //           itemBuilder: (context, index) {
-            //             Container project = snapshot.data[index];
-            //             return project;
-            //           },
-            //         ),
-            //       );
-            //     }
-            //   },
-            // ),
-          ),
-          
+                  child: ListView(
+                    children: nomi.carte,
+                  )
+                ),
+            ), 
+          ),        
         ],
       ),
     ));
