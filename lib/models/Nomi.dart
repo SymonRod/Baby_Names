@@ -26,6 +26,8 @@ class Nomi extends ChangeNotifier {
       );
 
       print(tempNomi.length);
+
+      _nomiContainer.clear();
       
       var tempContainer = getContainer();
 
@@ -41,6 +43,33 @@ class Nomi extends ChangeNotifier {
 
   List<Container> getContainer() {
     List<Container> nomi = List();
+
+    nomi.add(Container(
+      margin : EdgeInsets.symmetric(
+        horizontal: 30
+      ),
+      height: 45,
+      child: Card(
+        color: Colors.white,
+        child: Container(
+          margin: EdgeInsets.symmetric(
+            horizontal:10,
+          ),
+          alignment: Alignment.centerLeft,
+          child: Text(
+            (_nomi.length==1?'È stato trovato ':'Sono stati trovati ')+_nomi.length.toString()+(_nomi.length==1?' nome':' nomi'),      
+            style: TextStyle(
+              color: Colors.black,
+              fontFamily: 'Montserrat',
+              fontWeight: FontWeight.w700,
+            ),
+            textAlign: TextAlign.left,
+          ),
+        ),
+      ),
+      )
+    );
+
     for(int i=0;i<_nomi.length;i++) {
       nomi.add(
         Container(

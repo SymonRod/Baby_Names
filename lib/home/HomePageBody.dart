@@ -1,33 +1,13 @@
+import 'dart:async';
+
 import 'package:cercanomi/models/Nomi.dart';
 import 'package:flutter/material.dart';
-import 'package:cercanomi/cercanomi/cercanomi.dart';
 import 'package:provider/provider.dart';
 
-import '../cercanomi/cercanomi.dart';
 
-class HomePageBody extends StatefulWidget {
+class HomePageBody extends StatelessWidget {
+  final double horizontalMargin = 40;
   final TextEditingController textEditingController = TextEditingController();
-
-  @override
-  _HomePageBodyState createState() => _HomePageBodyState();
-}
-
-class _HomePageBodyState extends State<HomePageBody> {
-  double horizontalMargin = 40;
-  Color coloreInput = Colors.blueAccent;
-  List<dynamic> listaNomi ;
-
-  void aggiorna() async {
-    listaNomi = await carteNomi(widget.textEditingController.text);
-
-    setState(() {
-      if(listaNomi.length == 0){
-        coloreInput = Colors.red;
-      } else {
-        coloreInput = Colors.green;
-      }
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,54 +22,99 @@ class _HomePageBodyState extends State<HomePageBody> {
             padding: EdgeInsets.symmetric(
               horizontal: horizontalMargin,
             ),
-            child: Consumer<Nomi>(
-              builder: (context, nomi, child) =>
-                TextField(
-                  onEditingComplete: () {
-                    nomi.aggiornaNomi(widget.textEditingController.text);
-                  },
-                  controller: widget.textEditingController,
-                  style: TextStyle(
-                    color: Colors.white,
-                  ),
-                  decoration: InputDecoration(
-                    focusedBorder: new OutlineInputBorder(
-                      borderRadius: new BorderRadius.circular(25),
-                      borderSide: new BorderSide(
-                        color: nomi.lenght == 0? nomi.prima? Colors.white: Colors.red:Colors.green,
-                      )
-                    ),
-
-                    border: new OutlineInputBorder(
-                      borderRadius: new BorderRadius.circular(25),
-                      borderSide: new BorderSide(
-                        color: nomi.lenght == 0? nomi.prima? Colors.white: Colors.red:Colors.green,
-                      ),
-                    ),
-                    hintText: "Cerca un nome!",
-                    hintStyle: TextStyle(
-                      color: Colors.white,
-                      fontFamily: 'Montserrat',
-                    ),
-                  ),
-                ),
-            ),
+            child: InputText()
           ),
 
           // Carte dei Nomi
           Expanded(
-            child: Consumer<Nomi>(
-              builder: (context, nomi, child) => 
-                Container(
-                  
-                  child: ListView(
-                    children: nomi.carte,
-                  )
-                ),
+            child: Container(
+              child: Consumer<Nomi>(
+                builder: (context, nomi, child) =>
+                  ListView.builder(
+                    padding: EdgeInsets.zero,
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
+                    itemCount: (nomi.lenght==0?0:nomi.lenght+1),
+                    itemBuilder: (context, index) {
+                      Container project = nomi.carte[index];
+                      return project;
+                    },
+                  ),
+              )
             ), 
-          ),        
+          ),       
         ],
       ),
     ));
+  }
+}
+
+class InputText extends StatefulWidget {
+  @override
+  _InputTextState createState() => _InputTextState();
+}
+
+class _InputTextState extends State<InputText> with SingleTickerProviderStateMixin {
+  final _searchQuery = new TextEditingController();
+  Timer _debounce;
+  AnimationController _controller;
+
+
+  _onSearchChanged() {
+    if (_debounce?.isActive ?? false) _debounce.cancel();
+    _debounce = Timer(const Duration(milliseconds: 750), () {
+      Provider.of<Nomi>(context).aggiornaNomi(_searchQuery.text);
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _searchQuery.addListener(_onSearchChanged);
+    _controller = AnimationController(vsync: this);
+  }
+
+  @override
+  void dispose() {
+    _searchQuery.removeListener(_onSearchChanged);
+    _searchQuery.dispose();
+    _debounce.cancel();
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    
+
+    return Consumer<Nomi>(
+      builder: (context, nomi, child) =>
+        TextField(
+          controller: _searchQuery,
+          style: TextStyle(
+            color: Colors.white,
+          ),
+          decoration: InputDecoration(
+            focusedBorder: new OutlineInputBorder(
+              borderRadius: new BorderRadius.circular(25),
+              borderSide: new BorderSide(
+                color: nomi.lenght == 0? nomi.prima? Colors.white: Colors.red:Colors.green,
+              )
+            ),
+
+            border: new OutlineInputBorder(
+              borderRadius: new BorderRadius.circular(25),
+              borderSide: new BorderSide(
+                color: nomi.lenght == 0? nomi.prima? Colors.white: Colors.red:Colors.green,
+              ),
+            ),
+            hintText: "Cerca un nome!",
+            hintStyle: TextStyle(
+              color: Colors.white,
+              fontFamily: 'Montserrat',
+            ),
+          ),
+        ),
+    );
   }
 }
