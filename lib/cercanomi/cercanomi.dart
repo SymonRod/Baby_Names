@@ -1,12 +1,21 @@
 import 'dart:convert';
+import 'package:cercanomi/models/Nomi.dart';
 import 'package:flutter/material.dart';
 import 'package:cercanomi/models/Nome.dart';
 
 import 'httpclient.dart' as httpclient;
 
 
-Future<List<Nome>> fetchNomi(String nome) async {
-    String url = 'https://rodopo.000webhostapp.com/api/nomi.php?nome=$nome&lingua=IT,&type=json';
+Future<List<Nome>> fetchNomi(String nome,List<Lingua> lingue) async {
+    String lingueUrl ='';
+    lingue.forEach((lingua) {
+        if(lingua.isOn) {
+          lingueUrl+=lingua.toString()+',';
+        }
+      }
+    );
+
+    String url = 'https://rodopo.000webhostapp.com/api/nomi.php?nome=$nome&lingua=$lingueUrl,&type=json';
 
     var data = await httpclient.fetchResource(
       url: url,
@@ -19,12 +28,11 @@ Future<List<Nome>> fetchNomi(String nome) async {
   }
 
 
-Future<List<dynamic>> carteNomi(String nome) async {
+Future<List<dynamic>> carteNomi(String nome,List<Lingua> lingue) async {
   List nomi=List();
   if(nome != '')  {
   
-
-    var listaNomi = await fetchNomi(nome);
+    var listaNomi = await fetchNomi(nome,lingue);
 
     for(int i=0;i<listaNomi.length;i++) {
       nomi.add(

@@ -5,6 +5,9 @@ import 'package:cercanomi/home/HomePageBody.dart';
 import 'package:cercanomi/home/SideNavBar.dart';
 
 class HomePage extends StatelessWidget {
+  final Widget body;
+
+  HomePage({this.body});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +25,7 @@ class HomePage extends StatelessWidget {
             GradientAppBar(
               title: 'CercaNomi',
             ),
-            HomePageBody(),
+            this.body,
           ],
         )
       ) 

@@ -50,15 +50,7 @@ class GradientAppBar extends StatelessWidget {
                 flex: 1,
                 child: Container(
                   //color: Colors.red,
-                  child: IconButton(
-                    icon: Icon(Icons.settings),
-                    color: Colors.red[700], 
-                    onPressed: () {
-                      print(
-                        'TODO'
-                      );
-                    }, 
-                  ),
+
                 ),
               )
             ],

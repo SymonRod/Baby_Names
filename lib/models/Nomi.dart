@@ -1,22 +1,73 @@
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../cercanomi/cercanomi.dart';
 import 'Nome.dart';
+
+class Lingua  {
+  String name;
+  String value;
+  bool isOn;
+  Lingua({this.name, this.value, this.isOn = false});
+
+  @override
+  String toString() {
+    return this.value;
+  }
+
+}
 
 class Nomi extends ChangeNotifier {
   final List<Nome> _nomi = [];
   final List<Container> _nomiContainer = [];
   bool _prima = true;
+  final List<Lingua> _lingue = [
+    Lingua(
+      name: 'Italiano',
+      value: 'IT',
+      isOn: true,
+    ),
+    Lingua(
+      name: 'Inglese',
+      value: 'EN',
+    )
+  ];
 
   UnmodifiableListView<Nome> get nomi => UnmodifiableListView(_nomi);
   get carte => _nomiContainer;
   get lenght => _nomi.length;
   get prima => _prima;
 
+  void aggiornaLingua(String value, bool isOn)  {
+    _lingue.forEach((Lingua lingua) {
+        if(value == lingua.value) {
+          lingua.isOn = isOn;
+        }
+        print(
+        ('Lingua:'+lingua.name+' \n')+
+        ('isOn:'+lingua.isOn.toString()+' \n')
+        );
+      }
+    );
+
+    notifyListeners();
+  } 
+
+  bool getLinguaFromValue(String value) {
+    bool returnValue = false;
+    _lingue.forEach( (Lingua lingua) {
+        if(lingua.value == value) {
+          returnValue = lingua.isOn;
+        }
+      }
+    );
+    return returnValue;
+  }
+
   void aggiornaNomi(String nome)  async {
     if(nome != '')  {
-      var tempNomi = await fetchNomi(nome);
+      var tempNomi = await fetchNomi(nome,_lingue);
 
       _nomi.clear();
 

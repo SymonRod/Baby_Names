@@ -9,16 +9,35 @@ class SideNavBar extends StatelessWidget  {
       child: Container(
         color: Colors.grey[900],
         child: ListView(
-          padding: EdgeInsets.all(10),
           //Oggetti nel Drawer
           children: <Widget>[
+            DrawerHeader(
+              child: Text('Drawer Header'),
+            ),
             ListTile(
-              title: Text('Impostazioni'),
-              
-              onTap: () {
-
-              },
+              title: Text(
+                'Home',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontFamily: 'Montserrat',
+                ),
               ),
+              onTap: () {
+                Navigator.pushNamed(context, '/home');
+              },
+            ),
+            ListTile(
+              title: Text(
+                'Impostazioni',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontFamily: 'Montserrat',
+                ),
+              ),
+              onTap: () {
+                Navigator.pushNamed(context, '/home/setting');
+              },
+            ),
           ],
         ),
       )

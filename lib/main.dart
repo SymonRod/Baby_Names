@@ -1,4 +1,6 @@
+import 'package:cercanomi/home/HomePageBody.dart';
 import 'package:cercanomi/models/Nomi.dart';
+import 'package:cercanomi/setting/setting.dart';
 import 'package:flutter/material.dart';
 import 'package:cercanomi/home/HomePage.dart';
 import 'package:provider/provider.dart';
@@ -14,8 +16,16 @@ void main(List<String> args) {
       child: new MaterialApp(
         debugShowCheckedModeBanner: false,
         title: "Cerca Nomi",
-        home: HomePage(),
         color: Colors.black,
+        initialRoute: '/home',
+        routes: {
+          '/home':(context) => HomePage(
+            body: HomePageBody()
+          ),
+          '/home/setting': (contex) => HomePage(
+            body: Setting(),
+          ),
+        },
       ),
     )
   );
