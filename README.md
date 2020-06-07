@@ -1,6 +1,6 @@
-# cercanomi
+# BabyNames
 
-A new Flutter project.
+BabyNames è una applizaione sviluppata in flutter in grado di cercare nomi in diverse lingue.
 
 ## Getting Started
 
