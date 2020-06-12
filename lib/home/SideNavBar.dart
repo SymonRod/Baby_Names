@@ -28,7 +28,7 @@ class SideNavBar extends StatelessWidget {
               style: TextStyle(
                 color: Colors.white,
                 fontFamily: 'Abel',
-                fontSize: 15,
+                fontSize: 20,
               ),
             ),
             onTap: () {
@@ -41,7 +41,7 @@ class SideNavBar extends StatelessWidget {
               style: TextStyle(
                 color: Colors.white,
                 fontFamily: 'Abel',
-                fontSize: 15,
+                fontSize: 20,
               ),
             ),
             onTap: () {
