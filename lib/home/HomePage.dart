@@ -1,8 +1,8 @@
-import 'package:cercanomi/home/GradientAppBar.dart';
+import 'package:babynames/home/GradientAppBar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:cercanomi/home/HomePageBody.dart';
-import 'package:cercanomi/home/SideNavBar.dart';
+import 'package:babynames/home/HomePageBody.dart';
+import 'package:babynames/home/SideNavBar.dart';
 
 class HomePage extends StatelessWidget {
   final Widget body;

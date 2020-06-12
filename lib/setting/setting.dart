@@ -1,12 +1,12 @@
-import 'package:cercanomi/models/Nomi.dart';
+import 'package:babynames/models/Nomi.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class Setting extends StatelessWidget{
+class Setting extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child:  Column(
+      child: Column(
         children: <Widget>[
           Container(
             alignment: Alignment.topCenter,
@@ -20,7 +20,6 @@ class Setting extends StatelessWidget{
               ),
             ),
           ),
-
           Expanded(
             child: Container(
               margin: EdgeInsets.symmetric(
@@ -37,7 +36,7 @@ class Setting extends StatelessWidget{
                   //     fontFamily: 'Montserrat'
                   //   ),
                   // ),
-                  
+
                   Container(
                     width: 180,
                     decoration: BoxDecoration(
@@ -47,40 +46,47 @@ class Setting extends StatelessWidget{
                     ),
                     child: DropdownButtonHideUnderline(
                       child: DropdownButton(
-                        selectedItemBuilder: (BuildContext context) {
-                          return <Widget> [Container(width:150,alignment: Alignment.center,child:Text('Lingue',textAlign: TextAlign.center,))];
-                        },
-                        onChanged: (temp) {
-                        },
-                        items: [
-                          DropdownMenuItem(
-                            child: Consumer<Nomi>(
-                              builder: (context, nomi, child) =>
-                                Container(
+                          selectedItemBuilder: (BuildContext context) {
+                            return <Widget>[
+                              Container(
+                                  width: 150,
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    'Lingue',
+                                    textAlign: TextAlign.center,
+                                  ))
+                            ];
+                          },
+                          onChanged: (temp) {},
+                          items: [
+                            DropdownMenuItem(
+                              child: Consumer<Nomi>(
+                                builder: (context, nomi, child) => Container(
                                   child: CheckboxListTile(
                                     title: Text('Italiano'),
                                     value: nomi.getLinguaFromValue('IT'),
                                     onChanged: (bool isOn) {
-                                      Provider.of<Nomi>(context).aggiornaLingua('IT', isOn);
+                                      Provider.of<Nomi>(context)
+                                          .aggiornaLingua('IT', isOn);
                                     },
                                   ),
                                 ),
+                              ),
                             ),
-                          ),
-                          DropdownMenuItem(
-                            child: Consumer<Nomi>(
-                              builder: (context, nomi, child) =>
-                                CheckboxListTile(
+                            DropdownMenuItem(
+                              child: Consumer<Nomi>(
+                                builder: (context, nomi, child) =>
+                                    CheckboxListTile(
                                   title: Text('Inglese'),
                                   value: nomi.getLinguaFromValue('EN'),
                                   onChanged: (bool isOn) {
-                                    Provider.of<Nomi>(context).aggiornaLingua('EN', isOn);
+                                    Provider.of<Nomi>(context)
+                                        .aggiornaLingua('EN', isOn);
                                   },
+                                ),
                               ),
                             ),
-                          ),
-                        ]
-                      ),
+                          ]),
                     ),
                   ),
                 ],

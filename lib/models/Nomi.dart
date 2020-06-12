@@ -2,10 +2,10 @@ import 'dart:collection';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../cercanomi/cercanomi.dart';
+import 'package:babynames/cercanomi/cercanomi.dart';
 import 'Nome.dart';
 
-class Lingua  {
+class Lingua {
   String name;
   String value;
   bool isOn;
@@ -15,7 +15,6 @@ class Lingua  {
   String toString() {
     return this.value;
   }
-
 }
 
 class Nomi extends ChangeNotifier {
@@ -39,55 +38,49 @@ class Nomi extends ChangeNotifier {
   get lenght => _nomi.length;
   get prima => _prima;
 
-  void aggiornaLingua(String value, bool isOn)  {
+  void aggiornaLingua(String value, bool isOn) {
     _lingue.forEach((Lingua lingua) {
-        if(value == lingua.value) {
-          lingua.isOn = isOn;
-        }
-        print(
-        ('Lingua:'+lingua.name+' \n')+
-        ('isOn:'+lingua.isOn.toString()+' \n')
-        );
+      if (value == lingua.value) {
+        lingua.isOn = isOn;
       }
-    );
+      print(('Lingua:' + lingua.name + ' \n') +
+          ('isOn:' + lingua.isOn.toString() + ' \n'));
+    });
 
     notifyListeners();
-  } 
+  }
 
   bool getLinguaFromValue(String value) {
     bool returnValue = false;
-    _lingue.forEach( (Lingua lingua) {
-        if(lingua.value == value) {
-          returnValue = lingua.isOn;
-        }
+    _lingue.forEach((Lingua lingua) {
+      if (lingua.value == value) {
+        returnValue = lingua.isOn;
       }
-    );
+    });
     return returnValue;
   }
 
-  void aggiornaNomi(String nome)  async {
-    if(nome != '')  {
-      var tempNomi = await fetchNomi(nome,_lingue);
+  void aggiornaNomi(String nome) async {
+    if (nome != '') {
+      var tempNomi = await fetchNomi(nome, _lingue);
 
       _nomi.clear();
 
       tempNomi.forEach((Nome nomeTemp) {
-          _nomi.add(nomeTemp);
-        }
-      );
+        _nomi.add(nomeTemp);
+      });
 
       print(tempNomi.length);
 
       _nomiContainer.clear();
-      
+
       var tempContainer = getContainer();
 
       tempContainer.forEach((Container nomeContainerTemp) {
-          _nomiContainer.add(nomeContainerTemp);
-        }
-      );
+        _nomiContainer.add(nomeContainerTemp);
+      });
 
-      _prima=false;
+      _prima = false;
       notifyListeners();
     }
   }
@@ -96,19 +89,19 @@ class Nomi extends ChangeNotifier {
     List<Container> nomi = List();
 
     nomi.add(Container(
-      margin : EdgeInsets.symmetric(
-        horizontal: 30
-      ),
+      margin: EdgeInsets.symmetric(horizontal: 30),
       height: 45,
       child: Card(
         color: Colors.white,
         child: Container(
           margin: EdgeInsets.symmetric(
-            horizontal:10,
+            horizontal: 10,
           ),
           alignment: Alignment.centerLeft,
           child: Text(
-            (_nomi.length==1?'È stato trovato ':'Sono stati trovati ')+_nomi.length.toString()+(_nomi.length==1?' nome':' nomi'),      
+            (_nomi.length == 1 ? 'È stato trovato ' : 'Sono stati trovati ') +
+                _nomi.length.toString() +
+                (_nomi.length == 1 ? ' nome' : ' nomi'),
             style: TextStyle(
               color: Colors.black,
               fontFamily: 'Montserrat',
@@ -118,28 +111,23 @@ class Nomi extends ChangeNotifier {
           ),
         ),
       ),
-      )
-    );
+    ));
 
-    for(int i=0;i<_nomi.length;i++) {
+    for (int i = 0; i < _nomi.length; i++) {
       nomi.add(
         Container(
-          margin: EdgeInsets.symmetric(
-            horizontal: 30
-          ),
+          margin: EdgeInsets.symmetric(horizontal: 30),
           height: 45,
           child: Card(
             color: Colors.white,
             child: Row(
               children: <Widget>[
-                
                 //Nome
                 Expanded(
                   child: Container(
                     padding: EdgeInsets.symmetric(
                       horizontal: 10,
                     ),
-
                     child: Text(
                       _nomi[i].nome,
                       style: TextStyle(
@@ -159,7 +147,6 @@ class Nomi extends ChangeNotifier {
                     padding: EdgeInsets.symmetric(
                       horizontal: 10,
                     ),
-                    
                     child: Text(
                       _nomi[i].lingua,
                       style: TextStyle(
