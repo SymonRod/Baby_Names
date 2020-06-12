@@ -17,18 +17,16 @@ class HomePage extends StatelessWidget {
     ]);
 
     return new SafeArea(
-      child: Scaffold(
-        backgroundColor: Colors.grey[900],
-        drawer: SideNavBar(),
-        body: new Column(
-          children: <Widget>[
-            GradientAppBar(
-              title: 'CercaNomi',
-            ),
-            this.body,
-          ],
-        )
-      ) 
-    );
+        child: Scaffold(
+            backgroundColor: Colors.grey[900],
+            drawer: SideNavBar(),
+            body: new Column(
+              children: <Widget>[
+                GradientAppBar(
+                  title: 'Baby Names',
+                ),
+                this.body,
+              ],
+            )));
   }
 }
