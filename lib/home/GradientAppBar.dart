@@ -22,7 +22,7 @@ class GradientAppBar extends StatelessWidget {
                 child: Container(
                   alignment: Alignment.centerLeft,
                   child: IconButton(
-                    color: Colors.green[600],
+                    color: Color(0xFF00BBFF),
                     iconSize: 30,
                     icon: Icon(Icons.menu),
                     onPressed: () => Scaffold.of(context).openDrawer(),

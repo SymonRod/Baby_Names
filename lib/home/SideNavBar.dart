@@ -11,15 +11,17 @@ class SideNavBar extends StatelessWidget {
         children: <Widget>[
           DrawerHeader(
               child: Container(
-            child: Text(
-              'Baby Names',
-              style: TextStyle(
-                color: Colors.white,
-                fontFamily: 'Abel',
-                fontSize: 15,
+              alignment: Alignment.centerLeft,
+              child: Text(
+                'Baby Names',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontFamily: 'Abel',
+                  fontSize: 30,
+                ),
               ),
             ),
-          )),
+          ),
           ListTile(
             title: Text(
               'Home',

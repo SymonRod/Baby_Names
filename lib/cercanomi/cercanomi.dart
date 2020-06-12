@@ -15,7 +15,7 @@ Future<List<Nome>> fetchNomi(String nome,List<Lingua> lingue) async {
       }
     );
 
-    String url = 'https://rodopo.000webhostapp.com/api/nomi.php?nome=$nome&lingua=$lingueUrl,&type=json';
+    String url = 'https://rodopo.altervista.org/api/nomi.php?nome=$nome&lingua=$lingueUrl,&type=json';
 
     var data = await httpclient.fetchResource(
       url: url,

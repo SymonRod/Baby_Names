@@ -98,14 +98,14 @@ class _InputTextState extends State<InputText> with SingleTickerProviderStateMix
             focusedBorder: new OutlineInputBorder(
               borderRadius: new BorderRadius.circular(25),
               borderSide: new BorderSide(
-                color: nomi.lenght == 0? nomi.prima? Colors.white: Colors.red:Colors.green,
+                color: nomi.lenght == 0? nomi.prima? Colors.white: Colors.red:Color(0xFF00BBFF),
               )
             ),
 
             border: new OutlineInputBorder(
               borderRadius: new BorderRadius.circular(25),
               borderSide: new BorderSide(
-                color: nomi.lenght == 0? nomi.prima? Colors.white: Colors.red:Colors.green,
+                color: nomi.lenght == 0? nomi.prima? Colors.white: Colors.red:Color(0xFF00BBFF),
               ),
             ),
             hintText: "Cerca un nome!",
